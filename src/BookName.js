@@ -3,7 +3,10 @@ import React, { Component } from 'react';
 class BookProperties extends Component {
   render () {
     return (
-      0
+      <div>
+        <div className="book-title">To Kill a Mockingbird</div>
+        <div className="book-authors">Harper Lee</div>
+      </div>
     )
   }
 }
