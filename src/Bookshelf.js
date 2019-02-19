@@ -5,21 +5,31 @@ import * as BooksAPI from './BooksAPI'
 
 class Bookshelf extends Component {
   state = {
-    books: []
+    books: [],
+    shelfs: ["Reading", "Want to Read", "Read"]
   }
 
+  getAllBooks = () => (BooksAPI.getAll()
+    .then((books) => {
+      this.setState(() => ({
+        books
+      }))
+    }))
+
   componentDidMount() {
-    BooksAPI.getAll()
-      .then((books) => {
-        this.setState(() => ({
-          books
-        }))
-      })
+    this.getAllBooks()
   }
+
+  updateShelf = () => (
+    this.getAllBooks()
+  )
 
 
   render () {
-        console.log(this.state.books);
+    console.log(this.state);
+    console.log(this.updateShelf);
+    const { books } = this.state;
+
     return (
       <div className="list-books">
         <div className="list-books-title">
@@ -29,20 +39,39 @@ class Bookshelf extends Component {
         <div className="list-books-content">
           <div>
           <div>
+
             <div className="bookshelf">
               <h2 className="bookshelf-title">Reading</h2>
-              <div className="bookshelf-books">
-                    <Book books={this.state.books} />
-              </div>
+              <ol className="books-grid">
+                {books.map((book) => (
+                  (book.shelf === "currentlyReading") ?
+                    <div className="bookshelf-books">
+                        <Book
+                          book={book}
+                          shelfSelected={book.shelf}
+                          updateShelf={this.updateShelf}
+                        />
+                    </div>
+                    : false
+                  ))}
+              </ol>
             </div>
 
             <div className="bookshelf">
               <h2 className="bookshelf-title">Want to read</h2>
               <div className="bookshelf-books">
                 <ol className="books-grid">
-                  <li>
-                    <Book books={this.state.books} />
-                  </li>
+                    {books.map((book) => (
+                      (book.shelf === "wantToRead") ?
+                        <div className="bookshelf-books">
+                            <Book
+                              book={book}
+                              shelfSelected={book.shelf}
+                              updateShelf={this.updateShelf}
+                            />
+                        </div>
+                        : false
+                      ))}
                 </ol>
               </div>
             </div>
@@ -51,9 +80,17 @@ class Bookshelf extends Component {
               <h2 className="bookshelf-title">Read</h2>
               <div className="bookshelf-books">
                 <ol className="books-grid">
-                <li>
-                  <Book books={this.state.books} />
-                </li>
+                  {books.map((book) => (
+                    (book.shelf === "read") ?
+                      <div className="bookshelf-books">
+                          <Book
+                            book={book}
+                            shelfSelected={book.shelf}
+                            updateShelf={this.updateShelf}
+                          />
+                      </div>
+                      : false
+                    ))}
                 </ol>
               </div>
             </div>

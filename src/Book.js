@@ -4,32 +4,34 @@ import * as BooksAPI from './BooksAPI'
 
 class Book extends Component {
   render () {
-    const { books } = this.props;
+    const { bookName, bookAuthors, bookCover, shelfSelected, updateShelf } = this.props;
+
+    const  book  = this.props.book;
+    console.log(book.title);
+    console.log(updateShelf);
 
     return (
-      <ol className="books-grid">
-
-        {books.map((book) => (
-          <li>
-            <div className="book">
-              <div className="book-top">
-                <div className="book-cover"
-                  style={{
-                      width: 128,
-                      height: 193,
-                      backgroundImage: `url("${book.imageLinks.thumbnail}")`
-                    }}></div>
-                <BookContext />
-              </div>
-              <div>
-                <div className="book-title">{book.title}</div>
-                <div className="book-authors">{book.authors}</div>
-              </div>
+        <li>
+          <div className="book">
+            <div className="book-top">
+              <div className="book-cover"
+                style={{
+                    width: 128,
+                    height: 193,
+                    backgroundImage: `url("${book.imageLinks.thumbnail}")`
+                  }}></div>
+              <BookContext
+                shelfSelected= {shelfSelected}
+                book= {book}
+                updateShelf={updateShelf}
+              />
             </div>
-          </li>
-        ))}
-
-      </ol>
+            <div>
+              <div className="book-title">{book.title}</div>
+              <div className="book-authors">{book.authors}</div>
+            </div>
+          </div>
+        </li>
     )
   }
 }

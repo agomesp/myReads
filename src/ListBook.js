@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class OpenSearch extends Component {
+class ListBook extends Component {
   render () {
     return (
       <div className="open-search">
@@ -10,4 +10,4 @@ class OpenSearch extends Component {
   }
 }
 
-export default OpenSearch;
+export default ListBook;
