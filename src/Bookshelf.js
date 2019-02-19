@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import Book from './Book'
 import ListBook from './ListBook'
 import * as BooksAPI from './BooksAPI'
+import { Route, Link } from 'react-router-dom'
 
 class Bookshelf extends Component {
   state = {
     books: [],
-    shelfs: ["Reading", "Want to Read", "Read"]
   }
 
   getAllBooks = () => (BooksAPI.getAll()
@@ -31,77 +31,88 @@ class Bookshelf extends Component {
     const { books } = this.state;
 
     return (
-      <div className="list-books">
-        <div className="list-books-title">
-          <h1>Bookshelf</h1>
-          <hr/>
-        </div>
-        <div className="list-books-content">
-          <div>
-          <div>
+      <div>
+        <Route path='/search' render={({ history }) =>
+          <ListBook
+            books={books}
+            onBack={() => {history.push('/'); this.updateShelf();}}
+            updateShelf={this.updateShelf}
+          />
+        }/>
 
-            <div className="bookshelf">
-              <h2 className="bookshelf-title">Reading</h2>
-              <ol className="books-grid">
-                {books.map((book) => (
-                  (book.shelf === "currentlyReading") ?
-                    <div className="bookshelf-books">
-                        <Book
-                          book={book}
-                          shelfSelected={book.shelf}
-                          updateShelf={this.updateShelf}
-                        />
-                    </div>
-                    : false
-                  ))}
-              </ol>
+        <Route exact path='/' render={() => (
+          <div className="list-books">
+            <div className="list-books-title">
+              <h1>Bookshelf</h1>
+              <hr/>
             </div>
+            <div className="list-books-content">
+              <div>
+              <div>
 
-            <div className="bookshelf">
-              <h2 className="bookshelf-title">Want to read</h2>
-              <div className="bookshelf-books">
-                <ol className="books-grid">
+                <div className="bookshelf">
+                  <h2 className="bookshelf-title">Reading</h2>
+                  <ol className="books-grid">
                     {books.map((book) => (
-                      (book.shelf === "wantToRead") ?
+                      (book.shelf === "currentlyReading") ?
                         <div className="bookshelf-books">
                             <Book
                               book={book}
-                              shelfSelected={book.shelf}
                               updateShelf={this.updateShelf}
                             />
                         </div>
                         : false
                       ))}
-                </ol>
-              </div>
-            </div>
+                  </ol>
+                </div>
 
-            <div className="bookshelf">
-              <h2 className="bookshelf-title">Read</h2>
-              <div className="bookshelf-books">
-                <ol className="books-grid">
-                  {books.map((book) => (
-                    (book.shelf === "read") ?
-                      <div className="bookshelf-books">
-                          <Book
-                            book={book}
-                            shelfSelected={book.shelf}
-                            updateShelf={this.updateShelf}
-                          />
-                      </div>
-                      : false
-                    ))}
-                </ol>
+                <div className="bookshelf">
+                  <h2 className="bookshelf-title">Want to read</h2>
+                  <div className="bookshelf-books">
+                    <ol className="books-grid">
+                        {books.map((book) => (
+                          (book.shelf === "wantToRead") ?
+                            <div className="bookshelf-books">
+                                <Book
+                                  book={book}
+                                  updateShelf={this.updateShelf}
+                                />
+                            </div>
+                            : false
+                          ))}
+                    </ol>
+                  </div>
+                </div>
+
+                <div className="bookshelf">
+                  <h2 className="bookshelf-title">Read</h2>
+                  <div className="bookshelf-books">
+                    <ol className="books-grid">
+                      {books.map((book) => (
+                        (book.shelf === "read") ?
+                          <div className="bookshelf-books">
+                              <Book
+                                book={book}
+                                updateShelf={this.updateShelf}
+                              />
+                          </div>
+                          : false
+                        ))}
+                    </ol>
+                  </div>
+                </div>
+              </div>
               </div>
             </div>
+            <div className="open-search">
+              <Link to='/search'>
+                <button>Add a book</button>
+              </Link>
+            </div>
           </div>
-          </div>
-        </div>
-        <div className="open-search">
-          <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
-        </div>
+        )}/>
+
       </div>
-
 
 
     )

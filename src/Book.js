@@ -4,9 +4,8 @@ import * as BooksAPI from './BooksAPI'
 
 class Book extends Component {
   render () {
-    const { bookName, bookAuthors, bookCover, shelfSelected, updateShelf } = this.props;
+    const { book, updateShelf } = this.props;
 
-    const  book  = this.props.book;
     console.log(book.title);
     console.log(updateShelf);
 
@@ -21,7 +20,7 @@ class Book extends Component {
                     backgroundImage: `url("${book.imageLinks.thumbnail}")`
                   }}></div>
               <BookContext
-                shelfSelected= {shelfSelected}
+                shelfSelected= {book.shelf}
                 book= {book}
                 updateShelf={updateShelf}
               />
