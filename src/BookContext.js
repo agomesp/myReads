@@ -6,7 +6,6 @@ class BookContext extends Component {
     const { shelfSelected, book, updateShelf } = this.props
 
     const handleUpdate = (element) => {
-      console.log(element.value);
       BooksAPI.update(book, element.value);
       updateShelf();
     };

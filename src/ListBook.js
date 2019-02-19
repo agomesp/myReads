@@ -6,8 +6,6 @@ class ListBook extends Component {
   state = {
     query: "",
     showingBooks: [],
-    typing: false,
-    typingTimeout: 0
   }
 
   updateQuery = (query) => {
@@ -34,28 +32,10 @@ class ListBook extends Component {
     }
   }
 
-  handleUpdateQuery = (query) => {
-    if (this.state.typingTimeout){
-      clearTimeout(this.state.typingTimeout);
-    }
-
-    this.setState({
-      query: query,
-      typing: false,
-      typingTimeout: setTimeout(this.updateQuery(query), 5000)
-    })
-  }
-
-
-
-
-
   render () {
 
-    const { query, showingBooks, typing, typingTimeout } = this.state;
-    const { books, onBack, updateShelf } = this.props;
-
-
+    const { query, showingBooks } = this.state;
+    const { onBack, updateShelf } = this.props;
 
     return (
       <div className="search-books">
@@ -82,7 +62,7 @@ class ListBook extends Component {
         <div className="search-books-results">
           <ol className="books-grid">
             {showingBooks.map((book) => (
-              <Book book={book} updateShelf={updateShelf} />
+              <Book key={book.id} book={book} updateShelf={updateShelf} />
             ))}
           </ol>
         </div>

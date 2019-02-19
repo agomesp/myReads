@@ -26,15 +26,12 @@ class Bookshelf extends Component {
 
 
   render () {
-    console.log(this.state);
-    console.log(this.updateShelf);
     const { books } = this.state;
 
     return (
       <div>
         <Route path='/search' render={({ history }) =>
           <ListBook
-            books={books}
             onBack={() => {history.push('/'); this.updateShelf();}}
             updateShelf={this.updateShelf}
           />
@@ -55,7 +52,7 @@ class Bookshelf extends Component {
                   <ol className="books-grid">
                     {books.map((book) => (
                       (book.shelf === "currentlyReading") ?
-                        <div className="bookshelf-books">
+                        <div key={book.id} className="bookshelf-books">
                             <Book
                               book={book}
                               updateShelf={this.updateShelf}
@@ -72,7 +69,7 @@ class Bookshelf extends Component {
                     <ol className="books-grid">
                         {books.map((book) => (
                           (book.shelf === "wantToRead") ?
-                            <div className="bookshelf-books">
+                            <div key={book.id} className="bookshelf-books">
                                 <Book
                                   book={book}
                                   updateShelf={this.updateShelf}
@@ -90,7 +87,7 @@ class Bookshelf extends Component {
                     <ol className="books-grid">
                       {books.map((book) => (
                         (book.shelf === "read") ?
-                          <div className="bookshelf-books">
+                          <div key={book.id} className="bookshelf-books">
                               <Book
                                 book={book}
                                 updateShelf={this.updateShelf}

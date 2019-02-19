@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import BookContext from './BookContext'
-import * as BooksAPI from './BooksAPI'
 
 class Book extends Component {
   render () {
     const { book, updateShelf } = this.props;
 
-    console.log(book.title);
-    console.log(updateShelf);
-
     return (
-        <li>
+        <li key={book.id}>
           <div className="book">
             <div className="book-top">
               <div className="book-cover"
