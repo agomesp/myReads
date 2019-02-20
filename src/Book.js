@@ -3,9 +3,34 @@ import BookContext from './BookContext'
 
 class Book extends Component {
   render () {
-    const { book, updateShelf } = this.props;
+
+    const { book, updateShelf, oldBooks } = this.props;
+
+    let bookShelf = book.shelf;
+    let hasBook = false;
+    let bookCover = "";
+
+    if(!book.imageLinks){
+      bookCover = "http://lgimages.s3.amazonaws.com/nc-md.gif"
+    } else {
+      bookCover = book.imageLinks.thumbnail
+    }
+
+    if (oldBooks) {
+      {oldBooks.map((oldBook) => {
+           if (oldBook.id == book.id) {
+              bookShelf = oldBook.shelf;
+              hasBook = true;
+            } else if (!hasBook) {
+              bookShelf = "none";
+            };
+      })}
+    }
+
+
 
     return (
+
         <li key={book.id}>
           <div className="book">
             <div className="book-top">
@@ -13,10 +38,10 @@ class Book extends Component {
                 style={{
                     width: 128,
                     height: 193,
-                    backgroundImage: `url("${book.imageLinks.thumbnail}")`
+                    backgroundImage: `url("${bookCover}")`
                   }}></div>
               <BookContext
-                shelfSelected= {book.shelf}
+                shelfSelected= {bookShelf}
                 book= {book}
                 updateShelf={updateShelf}
               />

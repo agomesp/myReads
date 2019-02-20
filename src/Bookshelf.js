@@ -34,6 +34,7 @@ class Bookshelf extends Component {
           <ListBook
             onBack={() => {history.push('/'); this.updateShelf();}}
             updateShelf={this.updateShelf}
+            oldBooks={books}
           />
         }/>
 

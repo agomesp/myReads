@@ -4,8 +4,9 @@ import Book from './Book'
 
 class ListBook extends Component {
   state = {
-    query: "",
     showingBooks: [],
+    typing: false,
+    typingTimeout: 0
   }
 
   updateQuery = (query) => {
@@ -20,11 +21,9 @@ class ListBook extends Component {
         if (books.error === "empty query") {
           this.setState(() => ({
             showingBooks: [],
-            query: query.trim()
           }))
         }else {
           this.setState(()  => ({
-              query: query.trim(),
               showingBooks: books
           }));
         }
@@ -32,11 +31,20 @@ class ListBook extends Component {
     }
   }
 
+  handleUpdateQuery = (event) => {
+    if (this.state.typingTimeout) {
+      clearTimeout(this.state.typingTimeout);
+    }
+
+    this.setState({
+      typing: false,
+      typingTimeout: setTimeout(this.updateQuery(event.target.value), 5000)
+    })
+  }
+
   render () {
-
     const { query, showingBooks } = this.state;
-    const { onBack, updateShelf } = this.props;
-
+    const { onBack, updateShelf, oldBooks } = this.props;
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -52,17 +60,17 @@ class ListBook extends Component {
             <input
               type="text"
               placeholder="Search by title or author"
-              value={query}
-              onChange={(event) =>
-                this.updateQuery(event.target.value)}
+              onChange={this.handleUpdateQuery}
+
             />
 
           </div>
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
+
             {showingBooks.map((book) => (
-              <Book key={book.id} book={book} updateShelf={updateShelf} />
+              <Book key={book.id} book={book} updateShelf={updateShelf} oldBooks={oldBooks} />
             ))}
           </ol>
         </div>
