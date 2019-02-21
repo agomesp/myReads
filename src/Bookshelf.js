@@ -60,7 +60,7 @@ class Bookshelf extends Component {
             </div>
             <div className="list-books-content">
                 {shelfs.map((shelf) => (
-                  <div className="bookshelf">
+                  <div key={shelf.id} className="bookshelf">
                     <h2 className="bookshelf-title">{shelf.title}</h2>
                     <ol className="books-grid">
                       {books.map((book) => (

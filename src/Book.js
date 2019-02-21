@@ -27,8 +27,6 @@ class Book extends Component {
       })}
     }
 
-
-
     return (
 
         <li key={book.id}>
@@ -49,6 +47,7 @@ class Book extends Component {
             <div>
               <div className="book-title">{book.title}</div>
               <div className="book-authors">{book.authors}</div>
+              <div className="book-rating">Rating: {book.averageRating ? book.averageRating : 0}/5</div>
             </div>
           </div>
         </li>
