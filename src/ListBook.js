@@ -13,7 +13,6 @@ class ListBook extends Component {
     if (query === '') {
       this.setState(() => ({
         showingBooks: [],
-        query: ""
       }))
     } else {
       BooksAPI.search(query)
