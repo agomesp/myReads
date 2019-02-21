@@ -7,6 +7,20 @@ import { Route, Link } from 'react-router-dom'
 class Bookshelf extends Component {
   state = {
     books: [],
+    shelfs: [
+      {
+        id: "currentlyReading",
+        title:"Reading"
+      },
+      {
+        id: "wantToRead",
+        title: "Want to Read"
+      },
+      {
+        id: "read",
+        title: "Read"
+      }
+    ]
   }
 
   getAllBooks = () => (BooksAPI.getAll()
@@ -26,7 +40,7 @@ class Bookshelf extends Component {
 
 
   render () {
-    const { books } = this.state;
+    const { books, shelfs } = this.state;
 
     return (
       <div>
@@ -45,49 +59,12 @@ class Bookshelf extends Component {
               <hr/>
             </div>
             <div className="list-books-content">
-              <div>
-              <div>
-
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Reading</h2>
-                  <ol className="books-grid">
-                    {books.map((book) => (
-                      (book.shelf === "currentlyReading") ?
-                        <div key={book.id} className="bookshelf-books">
-                            <Book
-                              book={book}
-                              updateShelf={this.updateShelf}
-                            />
-                        </div>
-                        : false
-                      ))}
-                  </ol>
-                </div>
-
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Want to read</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                        {books.map((book) => (
-                          (book.shelf === "wantToRead") ?
-                            <div key={book.id} className="bookshelf-books">
-                                <Book
-                                  book={book}
-                                  updateShelf={this.updateShelf}
-                                />
-                            </div>
-                            : false
-                          ))}
-                    </ol>
-                  </div>
-                </div>
-
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Read</h2>
-                  <div className="bookshelf-books">
+                {shelfs.map((shelf) => (
+                  <div className="bookshelf">
+                    <h2 className="bookshelf-title">{shelf.title}</h2>
                     <ol className="books-grid">
                       {books.map((book) => (
-                        (book.shelf === "read") ?
+                        (book.shelf === shelf.id) ?
                           <div key={book.id} className="bookshelf-books">
                               <Book
                                 book={book}
@@ -98,9 +75,7 @@ class Bookshelf extends Component {
                         ))}
                     </ol>
                   </div>
-                </div>
-              </div>
-              </div>
+                ))}
             </div>
             <div className="open-search">
               <Link to='/search'>

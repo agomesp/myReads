@@ -17,7 +17,7 @@ class Book extends Component {
     }
 
     if (oldBooks) {
-      {oldBooks.map((oldBook) => {
+      {oldBooks.forEach((oldBook) => {
            if (oldBook.id == book.id) {
               bookShelf = oldBook.shelf;
               hasBook = true;
